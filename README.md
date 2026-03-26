@@ -26,7 +26,7 @@ The exercise is small enough to fit in one web project, but I still separated it
 
 This keeps the calculation logic testable and avoids mixing UI code with business logic.
 
-## Important ambiguity in the brief
+## Important ambiguity in the Exercise Description
 
 The task details has two places that are not very clear:
 
@@ -91,7 +91,7 @@ Paths can be changed in appsettings.json.
 
 ## Database choice
 
-I used SQLite because the brief allows a file-based relational database, and it makes the solution easy to run locally.
+I used SQLite because the Task Description allows a file-based relational database, and it makes the solution easy to run locally.
 
 Schema script:
 `sql/create-sqlite-schema.sql`
@@ -110,7 +110,7 @@ Tests focus on the calculation logic and aggregation:
 
 ## Included example outputs
 
-Using the supplied CSV files and sample inputs from the brief,
+Using the supplied CSV files and sample inputs from the Exercise Descriptoin,
 I included example results:
 
 - `docs/sample-results-market-shock.csv`
