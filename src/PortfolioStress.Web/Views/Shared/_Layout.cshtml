@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Portfolio Stress test exercise</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="topbar">
+        <div class="container topbar-inner">
+            <div>
+                <a asp-controller="Runs" asp-action="Index" class="brand">Portfolio Stress</a>
+                <span class="subtitle">loan portfolio scenario runner</span>
+            </div>
+            <nav class="nav-links">
+                <a asp-controller="Runs" asp-action="Index">Runs</a>
+                <a asp-controller="Runs" asp-action="Create">New Run</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container page-body">
+        @RenderBody()
+    </main>
+</body>
+</html>

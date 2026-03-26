@@ -1,0 +1,6 @@
+src/PortfolioStress.Web/obj/
+src/PortfolioStress.Web/bin/
+.vs/
+tests/PortfolioStress.Tests/bin/
+tests/PortfolioStress.Tests/obj/
+src/PortfolioStress.Web/App_Data/

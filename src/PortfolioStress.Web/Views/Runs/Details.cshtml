@@ -1,0 +1,121 @@
+@model RunDetailsViewModel
+@{
+    ViewData["Title"] = $"Run {Model.RunId}";
+}
+
+<div class="page-header">
+    <div>
+        <h1>Run @Model.RunId</h1>
+        <p class="muted">Stored run metadata, scenario inputs, and aggregated portfolio outputs.</p>
+    </div>
+    <a asp-action="Index" class="button button-secondary">Back to runs</a>
+</div>
+
+<div class="summary-grid">
+    <div class="summary-card">
+        <span class="label">Started (UTC)</span>
+        <strong>@Model.StartedUtc.ToString("yyyy-MM-dd HH:mm:ss")</strong>
+    </div>
+    <div class="summary-card">
+        <span class="label">Completed (UTC)</span>
+        <strong>@Model.CompletedUtc.ToString("yyyy-MM-dd HH:mm:ss")</strong>
+    </div>
+    <div class="summary-card">
+        <span class="label">Duration</span>
+        <strong>@Model.DurationMilliseconds ms</strong>
+    </div>
+    <div class="summary-card">
+        <span class="label">Policy</span>
+        <strong>@Model.CalculationProfile</strong>
+    </div>
+    <div class="summary-card">
+        <span class="label">Loans</span>
+        <strong>@Model.LoanCount</strong>
+    </div>
+    <div class="summary-card">
+        <span class="label">Portfolios</span>
+        <strong>@Model.PortfolioCount</strong>
+    </div>
+</div>
+
+<div class="two-column-grid">
+    <section class="panel">
+        <h2>Run metadata</h2>
+        <dl class="key-value-grid">
+            <dt>Scenario collateral formula</dt>
+            <dd>@Model.ScenarioCollateralFormula</dd>
+            <dt>Recovery rate base</dt>
+            <dd>@Model.RecoveryRateBase</dd>
+            <dt>Clamp negative LGD to zero</dt>
+            <dd>@(Model.ClampNegativeLossGivenDefaultToZero ? "Yes" : "No")</dd>
+            <dt>source (portfolios)</dt>
+            <dd>@Model.SourcePortfoliosPath</dd>
+            <dt>Loans source</dt>
+            <dd>@Model.SourceLoansPath</dd>
+            <dt>Ratings source</dt>
+            <dd>@Model.SourceRatingsPath</dd>
+            <dt>Total outstanding</dt>
+            <dd>@Model.TotalOutstandingAmount.ToString("N2")</dd>
+            <dt>Total collateral</dt>
+            <dd>@Model.TotalCollateralValue.ToString("N2")</dd>
+            <dt>Total scenario collateral</dt>
+            <dd>@Model.TotalScenarioCollateralValue.ToString("N2")</dd>
+            <dt>Total expected loss</dt>
+            <dd>@Model.TotalExpectedLoss.ToString("N2")</dd>
+        </dl>
+    </section>
+
+    <section class="panel">
+        <h2>Scenario inputs</h2>
+        <table class="table compact">
+            <thead>
+                <tr>
+                    <th>Country</th>
+                    <th>Change</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.CountryInputs)
+            {
+                <tr>
+                    <td>@item.CountryCode</td>
+                    <td>@item.PercentageChange.ToString("0.00")%</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </section>
+</div>
+
+<section class="panel">
+    <h2>Aggregated portfolio results</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Portfolio</th>
+                <th>Country</th>
+                <th>Currency</th>
+                <th>Loans</th>
+                <th>Total Outstanding</th>
+                <th>Total Collateral</th>
+                <th>Total Scenario Collateral</th>
+                <th>Total Expected Loss</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var result in Model.PortfolioResults)
+        {
+            <tr>
+                <td>@result.PortfolioName (@result.PortfolioId)</td>
+                <td>@result.CountryCode</td>
+                <td>@result.CurrencyCode</td>
+                <td>@result.LoanCount</td>
+                <td>@result.TotalOutstandingAmount.ToString("N2")</td>
+                <td>@result.TotalCollateralValue.ToString("N2")</td>
+                <td>@result.TotalScenarioCollateralValue.ToString("N2")</td>
+                <td>@result.TotalExpectedLoss.ToString("N2")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</section>

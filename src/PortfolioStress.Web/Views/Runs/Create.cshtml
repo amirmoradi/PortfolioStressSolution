@@ -1,0 +1,70 @@
+@model CreateRunViewModel
+@{
+    ViewData["Title"] = "Create run";
+}
+
+<div class="page-header">
+    <div>
+        <h1>Create scenario run</h1>
+        <p class="muted">Enter a house price percentage change for each country and choose how to resolve the ambigutions in the task descriptoin.</p>
+    </div>
+</div>
+
+<div class="two-column-grid">
+    <section class="panel">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+            <div class="form-group">
+                <label asp-for="CalculationProfile">Calculation policy</label>
+                <select asp-for="CalculationProfile" asp-items="Model.AvailableCalculationProfiles" class="input"></select>
+            </div>
+
+            <table class="table compact">
+                <thead>
+                    <tr>
+                        <th>Country</th>
+                        <th>Percentage change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @for (var i = 0; i < Model.Countrystresss.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            <input asp-for="Countrystresss[i].CountryCode" type="hidden" />
+                            <span class="code-chip">@Model.Countrystresss[i].CountryCode</span>
+                        </td>
+                        <td>
+                            <input asp-for="Countrystresss[i].PercentageChange" class="input" step="0.01" />
+                            <span asp-validation-for="Countrystresss[i].PercentageChange" class="field-validation-error"></span>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+            <div class="form-actions">
+                <button type="submit" class="button">Run scenario</button>
+                <a asp-action="Index" class="button button-secondary">Cancel</a>
+            </div>
+        </form>
+    </section>
+
+    <aside class="panel">
+        <h2>Policies</h2>
+        <p class="muted">The task description leaves two material points open to interpretation: 
+            how the percentage change affects collateral, 
+            and whether recovery rate uses original or outstanding loan amount. 
+            Both policies are implemented so the behaviour is explicit.</p>
+        <div class="stack">
+        @foreach (var policy in Model.CalculationProfileDescriptions)
+        {
+            <div>
+                <h3>@policy.Name</h3>
+                <p class="muted">@policy.Description</p>
+            </div>
+        }
+        </div>
+    </aside>
+</div>
